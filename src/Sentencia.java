@@ -1,5 +1,5 @@
 public class Sentencia {
-    private enum Tipo  {
+     enum Tipo  {
         IF,
         ERROR,
         NADA, // estilo p_p_a
@@ -9,7 +9,7 @@ public class Sentencia {
         ENDIF,
 
     };
-    private Tipo t;
-    private Variable ppal;
-    private Variable sec;
+    Tipo t;
+    Variable ppal;
+    Variable sec;
 }
