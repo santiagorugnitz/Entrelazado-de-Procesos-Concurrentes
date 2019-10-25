@@ -1,9 +1,17 @@
 import java.util.ArrayList;
 
 public class Tabla {
+    class Estado{
+        ArrayList<Variable> variables;
+        Estado anterior;
+        int posx;
+        int posy;
+
+    }
+
     Programa p1;
     Programa p2;
-    Variable[][] estados;
+    Estado[][] estados;
     ArrayList<Variable> variables;
 
 
