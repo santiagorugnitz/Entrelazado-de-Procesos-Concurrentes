@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Compilador {
@@ -22,10 +23,47 @@ public class Compilador {
 
 
     public boolean compilar() throws FileNotFoundException {
+        ArrayList<String> listaLineas = new ArrayList<String>();
         Scanner in = new Scanner(archivo);
         int pos = 1;
-        while (in.hasNext()) {
-            Sentencia s = procesarLinea(in.nextLine());
+        while(in.hasNext()){
+            listaLineas.add(in.nextLine());
+        }
+
+        for (int i = 0; i < listaLineas.size(); i++) {
+            String l = listaLineas.get(i);
+            l = l.trim();
+            l = l.toLowerCase();
+            Sentencia s = null;
+            if (l.startsWith("if")){
+                int cantif = 1;
+                int j =0;
+                for (j = i; j < listaLineas.size() && cantif !=0; j++) {
+                    if (l.startsWith("if")) cantif++;
+                    if (l.startsWith("endif")) cantif --;
+                }
+                s = procesarLinea(listaLineas.get(i));
+                //En la posici[on, se guarda la sentencia a la que se tiene que ir si no se cumple
+                s.valores[2] = j;
+
+            }else if (l.startsWith("while")){
+                int cantwhile = 1;
+                int j = 0;
+                for (j = i; j < listaLineas.size() && cantwhile !=0; j++) {
+                    if (l.startsWith("while")) cantwhile++;
+                    if (l.startsWith("endwhile")) cantwhile --;
+                }
+                s = procesarLinea(listaLineas.get(i));
+                //En la posici[on, se guarda la sentencia a la que se tiene que ir si no se cumple
+                s.valores[2] = j;
+            }else if (l.startsWith("endif")){
+
+            }else if (l.startsWith("endwhile")){
+
+            }else{
+                s = procesarLinea(l);
+            }
+
             if (s.t == Sentencia.Tipo.ERROR) {
                 System.out.println("Error en " + nombre + " en linea " + pos);
                 return false;
@@ -37,16 +75,14 @@ public class Compilador {
     }
 
     private Sentencia procesarLinea(String linea) {
-        linea = linea.trim();
-        linea = linea.toLowerCase();
         Sentencia ret = null;
-        if (linea.startsWith("if")) {
-
-        } else if (linea.startsWith("while")) {
-
-        } else if (linea.startsWith("endif")) {
-
+        if (linea.startsWith("endif")) {
+            //Se procesa en el endif
         } else if (linea.startsWith("endwhile")) {
+            //Se procesa en el endwhile
+        } else if (linea.startsWith("if")) {
+
+        } else if (linea.startsWith("while")){
 
         }
         //TODO asignaciones con boolean seguramente sea un casteo 0-False 1-True
@@ -63,7 +99,7 @@ public class Compilador {
                     ret = new Sentencia(Sentencia.Tipo.ASIGVAR, linea.charAt(0), operacion.charAt(0));
                 } else if (esNumero(operacion)) {
                     ret = new Sentencia(Sentencia.Tipo.ASIGVAR, linea.charAt(0), 'z');
-                    ret.valor2 = Integer.parseInt(operacion);
+                    ret.valores[2] = Integer.parseInt(operacion);
                 } else {
                     ret = new Sentencia(Sentencia.Tipo.ERROR);
                 }
@@ -87,8 +123,8 @@ public class Compilador {
                         v2 = Integer.parseInt(operadores[0]);
                     } else o2 = operadores[1].charAt(0);
                     ret = new Sentencia(Sentencia.Tipo.ASIGOP, linea.charAt(0), o1, op, o2);
-                    ret.valor2 = v1;
-                    ret.valor3 = v2;
+                    ret.valores[2] = v1;
+                    ret.valores[3] = v2;
 
                 } else ret = new Sentencia(Sentencia.Tipo.ERROR);
             }
