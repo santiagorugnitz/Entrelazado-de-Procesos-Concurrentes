@@ -26,7 +26,7 @@ public class Compilador {
         int pos=1;
         while(in.hasNext()){
             Sentencia s = procesarLinea(in.nextLine());
-            if(s==null) {
+            if(s.t== Sentencia.Tipo.ERROR) {
                 System.out.println("Error en " + nombre + " en linea " + pos);
                 return false;
             }   
