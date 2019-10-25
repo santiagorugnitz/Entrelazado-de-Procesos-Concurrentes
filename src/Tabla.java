@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Tabla {
     class Estado{
-        ArrayList<Variable> variables;
+        int[] variables;
         Estado anterior;
         int posx;
         int posy;
@@ -12,7 +12,7 @@ public class Tabla {
     Programa p1;
     Programa p2;
     Estado[][] estados;
-    ArrayList<Variable> variables;
+    boolean[] Varusadas;
 
 
     public Tabla(Programa p1, Programa p2) {
