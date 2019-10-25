@@ -4,18 +4,22 @@ public class Tabla {
     class Estado{
         int[] variables;
         Estado anterior;
-        int posx;
-        int posy;
 
     }
 
     Programa p1;
     Programa p2;
     Estado[][] estados;
-    boolean[] Varusadas;
+    boolean[] vUsadas= new boolean[6];
+    int actual1=0;
+    int actual2=0;
 
 
-    public Tabla(Programa p1, Programa p2) {
+    public Tabla(Programa p1, Programa p2,Programa main) {
+        estados= new Estado[p1.largo][p2.largo];
+        for (int i = 0; i <vUsadas.length ; i++) {
+            vUsadas[i]=p1.variables[i]||p2.variables[i];
+        }
         
     }
 }

@@ -12,7 +12,7 @@ public class Main {
         Compilador c2 = new Compilador(f2,"Programa 2");
         Compilador cMain = new Compilador(main,"Main");
         if(c1.compilar()&&c2.compilar()&&cMain.compilar()){
-            Tabla t= new Tabla(c1.getPrograma(),c2.getPrograma());
+            Tabla t= new Tabla(c1.getPrograma(),c2.getPrograma(),cMain.getPrograma());
             //t.mostrar????
         }
     }
