@@ -49,6 +49,7 @@ public class Compilador {
         } else if (linea.startsWith("endwhile")) {
 
         }
+        //TODO asignaciones con boolean seguramente sea un casteo 0-False 1-True
         //ASIGNACION
         else if (linea.length() >= 3 && esUnaVar(linea.charAt(0)) && linea.charAt(1) == '=') {
             String operacion = linea.substring(2);
