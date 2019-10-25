@@ -11,27 +11,24 @@ public class Sentencia {
 
     };
     Tipo t;
-    char  v1;
-    char v2;
+    char[] variables= new char[4];
+    int[] valores= new int[4];
     char operador;
-    char v3;
-    int valor2;
-    int valor3;
 
     public Sentencia(Tipo t, char vPrincipal, char vSecundaria, char operador, char vTerciaria) {
         this.t = t;
-        this.v1 = vPrincipal;
-        this.v2 = vSecundaria;
+        this.variables[1] = vPrincipal;
+        this.variables[2] = vSecundaria;
         this.operador = operador;
-        this.v3= vTerciaria;
+        this.variables[3]= vTerciaria;
     }
     public Sentencia(Tipo t){
         this.t=t;
     }
     public Sentencia(Tipo t,char v1,char v2){
         this.t=t;
-        this.v1=v1;
-        this.v2=v2;
+        this.variables[1]=v1;
+        this.variables[2]=v2;
     }
 
 
