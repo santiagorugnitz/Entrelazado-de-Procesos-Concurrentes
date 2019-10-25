@@ -38,7 +38,6 @@ public class Compilador {
     }
 
     private Sentencia procesarLinea(String nextLine) {
-        System.out.println("xd");
         return null;
     }
 }
