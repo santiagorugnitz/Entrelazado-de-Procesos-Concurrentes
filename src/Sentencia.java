@@ -5,6 +5,8 @@ public class Sentencia {
         NADA, // estilo p_p_a
         ASIGNACION,
         WHILE,
+        ENDWHILE,
+        ENDIF,
 
     };
     private Tipo t;
