@@ -9,7 +9,10 @@ public class Tabla {
             this.variables=new int[6];
         }
         Estado(int[] a){
-            this.variables=a;
+            this.variables=new int[a.length];
+            for (int i = 0; i < a.length; i++) {
+                this.variables[i]=a[i];
+            }
         }
 
         @Override
@@ -67,13 +70,10 @@ public class Tabla {
     }
 
     void ejecutarDerecha(int i,int j,Estado e){
+        int[] posNuevas = posNueva(Sen)
         Estado nuevo = calcular(p1.sentencias.get(i),e);
         if(!this.estados[i+1][j].contains(nuevo)){
             estados[i+1][j].add(nuevo);
         }
-    }
-
-    Estado calcular(Sentencia s, Estado anterior){
-        return null;
     }
 }
