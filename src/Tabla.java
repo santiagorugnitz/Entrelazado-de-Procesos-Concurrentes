@@ -30,9 +30,9 @@ public class Tabla {
     int actual2=0;
 
     public Tabla(Programa p1, Programa p2,int valoresIni[]) {
-        estados= new ArrayList[p1.largo][p2.largo];
-        for (int i = 0; i < p1.largo; i++) {
-            for (int j = 0; j < p2.largo; j++) {
+        estados= new ArrayList[p1.largo+1][p2.largo+1];
+        for (int i = 0; i < p1.largo+1; i++) {
+            for (int j = 0; j < p2.largo+1; j++) {
                 estados[i][j]=new ArrayList<>();
             }
         }
@@ -40,20 +40,40 @@ public class Tabla {
             vUsadas[i]=p1.variables[i]||p2.variables[i];
         }
         estados[0][0].add(new Estado(valoresIni));
+        for (int i = 0; i < p1.largo; i++) {
+            for (int j = 0; j < p2.largo; j++) {
+                ampliarCelda(i,j);
+            }
+        }
+        for (int i = 0; i < p1.largo; i++) {
+            for (int j = 0; j < p2.largo; j++) {
+                ampliarCelda(i,j);
+            }
+        }
     }
 
     void ampliarCelda(int i,int j){
         ArrayList<Estado> c = estados[i][j];
         for (int k = 0; k < c.size(); k++) {
-            ejecutarAbajo(i,j);
-            ejecutarDerecha(i,j);
+            ejecutarAbajo(i,j,c.get(k));
+            ejecutarDerecha(i,j,c.get(k));
         }
     }
-    void ejecutarAbajo(int i,int j){
-        
+    void ejecutarAbajo(int i,int j,Estado e){
+         Estado nuevo = calcular(p2.sentencias.get(j),e);
+         if(!this.estados[i][j+1].contains(nuevo)){
+             estados[i][j+1].add(nuevo);
+         }
     }
 
-    void ejecutarDerecha(int i,int j){
+    void ejecutarDerecha(int i,int j,Estado e){
+        Estado nuevo = calcular(p1.sentencias.get(i),e);
+        if(!this.estados[i+1][j].contains(nuevo)){
+            estados[i+1][j].add(nuevo);
+        }
+    }
 
+    Estado calcular(Sentencia s, Estado anterior){
+        return null;
     }
 }
