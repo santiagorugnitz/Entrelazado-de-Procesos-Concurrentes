@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Compilador {
     private String nombre;
@@ -13,7 +14,7 @@ public class Compilador {
     public Compilador(File f, String n) {
         this.nombre = n;
         this.archivo = f;
-        this.prog = null;
+        this.prog = new Programa();
         this.hayErrores = false;
     }
 
@@ -106,7 +107,8 @@ public class Compilador {
             }
             //es un ASIGOP
             else {
-                String[] operadores = operacion.split(String.valueOf(op));
+                String sep = ""+op;
+                String[] operadores = operacion.split(Pattern.quote(sep));
                 if (operadores.length == 2 &&
                         (esNumero(operadores[0]) || (operadores[0].length() == 1 && esUnaVar(operadores[0].charAt(0)))) &&
                         (esNumero(operadores[1]) || (operadores[1].length() == 1 && esUnaVar(operadores[1].charAt(0))))) {
@@ -120,20 +122,14 @@ public class Compilador {
                     } else o1 = operadores[0].charAt(0);
                     if (esNumero(operadores[1])) {
                         o2 = 'z';
-                        v2 = Integer.parseInt(operadores[0]);
+                        v2 = Integer.parseInt(operadores[1]);
                     } else o2 = operadores[1].charAt(0);
                     ret = new Sentencia(Sentencia.Tipo.ASIGOP, linea.charAt(0), o1, op, o2);
                     ret.valores[2] = v1;
                     ret.valores[3] = v2;
 
                 } else ret = new Sentencia(Sentencia.Tipo.ERROR);
-            }
-            if (linea.length() == 5 && esOperador(linea.charAt(3)) && esUnaVar(linea.charAt(2)) && esUnaVar(linea.charAt(4))) {
-                ret = new Sentencia(Sentencia.Tipo.ASIGOP, linea.charAt(0), linea.charAt(2), linea.charAt(3), linea.charAt(4));
-            } else if (linea.length() == 3 && esUnaVar(linea.charAt(2))) {
-                ret = new Sentencia(Sentencia.Tipo.ASIGVAR, linea.charAt(0), linea.charAt(2));
-            } else ret = new Sentencia(Sentencia.Tipo.ERROR);
-        } else if (linea.startsWith("co")) {
+            }} else if (linea.startsWith("co")) {
             ret = new Sentencia(Sentencia.Tipo.NADA);
         }
         //ERROR

@@ -42,7 +42,7 @@ public class Main {
 
         if(c1.compilar()&&c2.compilar()){
             Tabla t= new Tabla(c1.getPrograma(),c2.getPrograma(),valoresIniciales);
-            //t.mostrar????
+            t.mostrar();
         }
     }
     }

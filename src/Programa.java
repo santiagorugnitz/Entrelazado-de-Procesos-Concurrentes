@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Programa {
     int largo;
     ArrayList<Sentencia> sentencias;
-    boolean[] variables= new boolean[6];
+    boolean[] variables;
 
     public Programa() {
         this.largo = 0;
