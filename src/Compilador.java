@@ -90,6 +90,10 @@ public class Compilador {
         //ASIGNACION
         else if (linea.length() >= 3 && esUnaVar(linea.charAt(0)) && linea.charAt(1) == '=') {
             String operacion = linea.substring(2);
+            if(esBooleano(operacion)){
+                Booleano b = new Booleano(operacion);
+                ret = new Sentencia
+            }
             char op = 'x';
             for (int i = 0; i < operacion.length(); i++) {
                 if (esOperador(operacion.charAt(i))) op = operacion.charAt(i);
@@ -129,7 +133,9 @@ public class Compilador {
                     ret.valores[3] = v2;
 
                 } else ret = new Sentencia(Sentencia.Tipo.ERROR);
-            }} else if (linea.startsWith("co")) {
+
+            }
+        } else if (linea.startsWith("co")) {
             ret = new Sentencia(Sentencia.Tipo.NADA);
         }
         //ERROR

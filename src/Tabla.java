@@ -32,8 +32,14 @@ public class Tabla {
             if(vUsadas[1])System.out.println("b = "+variables[1]);
             if(vUsadas[2])System.out.println("c = "+variables[2]);
             if(vUsadas[3])System.out.println("d = "+variables[3]);
-            if(vUsadas[4])System.out.println("e = "+variables[4]);
-            if(vUsadas[5])System.out.println("f = "+variables[5]);
+            if(vUsadas[4]){
+                if(variables[4]==1)System.out.println("e = true");
+                else System.out.println("e = false");
+            }
+            if(vUsadas[5]){
+                if(variables[5]==1)System.out.println("f = true");
+                else System.out.println("f = false");
+            }
 
         }
     }
@@ -151,6 +157,7 @@ public class Tabla {
                     break;
             }
         }
+        if(pos>3&&ret.variables[pos]!=0)ret.variables[pos]=1;
         return ret;
     }
 
