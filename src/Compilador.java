@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -86,13 +88,12 @@ public class Compilador {
         } else if (linea.startsWith("while")){
 
         }
-        //TODO asignaciones con boolean seguramente sea un casteo 0-False 1-True
         //ASIGNACION
         else if (linea.length() >= 3 && esUnaVar(linea.charAt(0)) && linea.charAt(1) == '=') {
             String operacion = linea.substring(2);
-            if(esBooleano(operacion)){
-                Booleano b = new Booleano(operacion);
-                ret = new Sentencia
+            Booleano b = volverBooleano(operacion);
+            if(b!=null){
+                return new Sentencia(Sentencia.Tipo.ASIGBOOL,linea.charAt(0),b);
             }
             char op = 'x';
             for (int i = 0; i < operacion.length(); i++) {
@@ -149,6 +150,10 @@ public class Compilador {
         return 'a' <= c && c <= 'f';
     }
 
+    boolean esUnaVarB(char c) {
+        return 'e' <= c && c <= 'f';
+    }
+
     boolean esNumero(char c) {
         return '0' <= c && c <= '9';
     }
@@ -164,5 +169,71 @@ public class Compilador {
 
     boolean esOperador(char c) {
         return c == '+' || c == '-' || c == '*' || c == '/';
+    }
+
+    //da null si no es posible
+     Booleano volverBooleano(String s){
+        s=s.toLowerCase();
+        s=s.trim();
+        if(s.length()==1&&esUnaVarB(s.charAt(0))){
+            return new Booleano(Booleano.tipo.VAR,key(s.charAt(0)));
+        }
+        s=s.replaceAll("true","1");
+        s=s.replaceAll("false","0");
+        if(s.length()==1){
+            if(s.charAt(0)=='1')return new Booleano(Booleano.tipo.TRUE);
+            if(s.charAt(0)=='0')return new Booleano(Booleano.tipo.FALSE);
+        }
+        String[] operadores={"==","<=",">=","<",">","!="};
+        for (int i = 0; i < operadores.length; i++) {
+            if(s.contains(operadores[i])){
+                String[] operandos = s.split(operadores[i]);
+                if(operandos.length!=2)return null;
+                Booleano ret;
+                switch (i){
+                    case 0:
+                        ret= new Booleano(Booleano.tipo.IGUAL);
+                        break;
+                    case 1:
+                        ret= new Booleano(Booleano.tipo.MENORIGUAL);
+                        break;
+                    case 2:
+                        ret= new Booleano(Booleano.tipo.MAYORIGUAL);
+                        break;
+                    case 3:
+                        ret= new Booleano(Booleano.tipo.MENOR);
+                        break;
+                    case 4:
+                        ret= new Booleano(Booleano.tipo.MAYOR);
+                        break;
+                    case 5:
+                        ret= new Booleano(Booleano.tipo.DIFERENTE);
+                        break;
+                    default:
+                        //nunca entra aca pero si no lo pongo llora intellij
+                        ret= new Booleano(Booleano.tipo.TRUE);
+
+                }
+                for (int j = 0; j < 2; j++) {
+                    String op = operandos[j];
+                    if(esNumero(op)){
+                        ret.pos[j]=-1;
+                        ret.constantes[j]=Integer.parseInt(op);
+                    }
+                    else if(op.length()==1&&esUnaVar(op.charAt(0))){
+                        ret.pos[j]=key(op.charAt(0));
+                    }
+                }
+
+
+
+            }
+        }
+        return null;
+    }
+
+    public int key(char c){
+        if (c=='z'||c==0)return -1;
+        else return c-'a';
     }
 }

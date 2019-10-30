@@ -1,19 +1,17 @@
 public class Sentencia {
     enum Tipo {
-        IF,
         ERROR,
         NADA, // estilo p_p_a
         ASIGOP,
         ASIGVAR,
-        WHILE,
-        ENDWHILE,
-        ENDIF,
-
+        ASIGBOOL,
+        GOTO,
     };
     Tipo t;
     char[] variables= new char[4];
     int[] valores= new int[4];
     char operador;
+    Booleano b;
 
     public Sentencia(Tipo t, char vPrincipal, char vSecundaria, char operador, char vTerciaria) {
         this.t = t;
@@ -31,5 +29,15 @@ public class Sentencia {
         this.variables[2]=v2;
     }
 
+    public Sentencia(Tipo t, char v, Booleano b) {
+        this.t = t;
+        this.variables[1] = v;
+        this.b = b;
+    }
 
+    public Sentencia(Tipo t, Booleano b, int pos) {
+        this.t = t;
+        this.valores[1] = pos;
+        this.b = b;
+    }
 }
