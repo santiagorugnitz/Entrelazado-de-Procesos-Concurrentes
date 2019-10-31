@@ -44,7 +44,9 @@ public class Main {
         Compilador c1 = new Compilador(f1,"Programa 1",alias);
         Compilador c2 = new Compilador(f2,"Programa 2",alias);
         if(c1.compilar()&&c2.compilar()){
-            Tabla t= new Tabla(c1.getPrograma(),c2.getPrograma(),valoresIniciales);
+            System.out.println("While de afuera? [Y]es");
+            Scanner s = new Scanner(System.in);
+            Tabla t= new Tabla(c1.getPrograma(),c2.getPrograma(),valoresIniciales,s.nextLine().equals("Y"));
             t.mostrarReducido();
         }
     }

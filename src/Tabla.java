@@ -65,14 +65,15 @@ public class Tabla {
     boolean[] ignorarp2;
     ArrayList<Estado>[][] estados;
     boolean[] vUsadas = new boolean[6];
-    boolean terminado = false;
+    boolean whileAfuera;
 
-    public Tabla(Programa p1, Programa p2, int valoresIni[]) {
+    public Tabla(Programa p1, Programa p2, int valoresIni[],boolean whi) {
         this.p1 = p1;
         this.p2 = p2;
         estados = new ArrayList[p2.largo + 1][p1.largo + 1];
         ignorarp1 = new boolean[p1.largo + 1];
         ignorarp2 = new boolean[p2.largo + 1];
+        whileAfuera=whi;
         for (int i = 0; i < estados.length; i++) {
             for (int j = 0; j < estados[0].length; j++) {
                 estados[i][j] = new ArrayList<>();
@@ -84,18 +85,30 @@ public class Tabla {
             vUsadas[i] = p1.variables[i] || p2.variables[i];
         }
         estados[0][0].add(new Estado(valoresIni));
-        while (!terminado) {
-            terminado = true;
+        ampliarCelda(0,0);
+        if(whileAfuera){
             for (int i = 0; i < estados.length; i++) {
-                for (int j = 0; j < estados[0].length; j++) {
-                    ampliarCelda(i, j);
-                }
+                ArrayList<Estado> desde=estados[i][estados[0].length-1];
+                ArrayList<Estado> hasta=estados[i][0];
+                if(agregarTodos(desde,hasta))ampliarCelda(i,0);
+            }
+            for (int j = 0; j < estados[0].length; j++) {
+                ArrayList<Estado> desde=estados[estados.length-1][j];
+                ArrayList<Estado> hasta=estados[0][j];
+                if(agregarTodos(desde,hasta))ampliarCelda(0,j);
             }
         }
-
-
     }
-
+    boolean agregarTodos(ArrayList<Estado> desde,ArrayList<Estado> hasta){
+        boolean ret=false;
+        for (int i = 0; i < desde.size(); i++) {
+            if(!hasta.contains(desde.get(i))){
+                ret=true;
+                hasta.add(desde.get(i));
+            }
+        }
+        return ret;
+    }
     boolean esUnEnd(Sentencia s) {
         return (s.t == Sentencia.Tipo.ENDWHILE) || (s.t == Sentencia.Tipo.ENDIF);
     }
@@ -172,12 +185,10 @@ public class Tabla {
         if (y != -1) op2 = ret.variables[y];
         if (s.t == Sentencia.Tipo.ASIGVAR) {
             ret.variables[pos] = op1;
-        }
-        else if(s.t== Sentencia.Tipo.ASIGBOOL){
-            if(s.b.evaluar(anterior.variables))ret.variables[pos]=1;
-            else ret.variables[pos]=0;
-        }
-        else {
+        } else if (s.t == Sentencia.Tipo.ASIGBOOL) {
+            if (s.b.evaluar(anterior.variables)) ret.variables[pos] = 1;
+            else ret.variables[pos] = 0;
+        } else {
             switch (s.operador) {
                 case '+':
                     ret.variables[pos] = op1 + op2;
@@ -238,7 +249,7 @@ public class Tabla {
                 for (int j = 0; j < estados[0].length; j++) {
                     if (!ignorarp1[j]) {
 
-                        if(estados[i][j].size()>0)System.out.println("Celda: " + x + " " + y);
+                        if (estados[i][j].size() > 0) System.out.println("Celda: " + x + " " + y);
                         for (int k = 0; k < estados[i][j].size(); k++) {
                             estados[i][j].get(k).mostrarReducido();
                         }

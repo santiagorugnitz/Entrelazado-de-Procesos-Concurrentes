@@ -1,1 +1,6 @@
-variable=8
+p1deseaentrar=true
+pfav=2
+while p2deseaentrar==true and pfav==2 do
+endwhile
+seccionCritica
+p1deseaentrar=false

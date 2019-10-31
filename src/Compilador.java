@@ -203,6 +203,34 @@ public class Compilador {
             if (s.charAt(0) == '0') return new Booleano(Booleano.tipo.FALSE);
             if(s.charAt(0)=='f'||s.charAt(0)=='e')s+="==true";
         }
+        String[] conectivas = {"and","or","equals","diff"};
+        for (int i = 0; i < conectivas.length; i++) {
+            if(s.contains(conectivas[i])){
+                String[] booleanos=s.split(conectivas[i],2);
+                if(booleanos.length!=2)return null;
+                Booleano b1=volverBooleano(booleanos[0]);
+                Booleano b2=volverBooleano(booleanos[1]);
+                if(b1==null||b2==null)return null;
+                Booleano.operador op;
+                switch (i){
+                    case 0:
+                        op= Booleano.operador.AND;
+                        break;
+                    case 1:
+                        op= Booleano.operador.OR;
+                        break;
+                    case 2:
+                        op= Booleano.operador.EQUALS;
+                        break;
+                    case 3:
+                        op= Booleano.operador.DIFF;
+                        break;
+                    default:
+                        return null;
+                }
+                return new Booleano(Booleano.tipo.BINARIO,op,b1,b2);
+            }
+        }
         String[] operadores = {"==", "<=", ">=", "<", ">", "!="};
         for (int i = 0; i < operadores.length; i++) {
             if (s.contains(operadores[i])) {
