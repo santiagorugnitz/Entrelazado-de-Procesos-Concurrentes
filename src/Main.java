@@ -46,7 +46,7 @@ public class Main {
         if(c1.compilar()&&c2.compilar()){
             System.out.println("While de afuera? [Y]es");
             Scanner s = new Scanner(System.in);
-            Tabla t= new Tabla(c1.getPrograma(),c2.getPrograma(),valoresIniciales,s.nextLine().equals("Y"));
+            Tabla t= new Tabla(c1.getPrograma(),c2.getPrograma(),valoresIniciales,s.nextLine().toUpperCase().equals("Y"));
             t.mostrarReducido();
         }
     }
