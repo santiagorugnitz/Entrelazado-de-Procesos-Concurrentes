@@ -5,7 +5,10 @@ public class Sentencia {
         ASIGOP,
         ASIGVAR,
         ASIGBOOL,
-        GOTO,
+        IF,
+        ENDIF,
+        WHILE,
+        ENDWHILE,
     };
     Tipo t;
     char[] variables= new char[4];

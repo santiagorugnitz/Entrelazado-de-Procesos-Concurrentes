@@ -96,7 +96,7 @@ public class Tabla {
                 case IF:
                 case WHILE:
                 case ENDWHILE:
-                    pos=ir(s);
+                    pos=ir(s,pos,nuevo.variables);
                     break;
 
             }
@@ -117,7 +117,7 @@ public class Tabla {
                 case IF:
                 case WHILE:
                 case ENDWHILE:
-                    pos=ir(s);
+                    pos=ir(s,pos,nuevo.variables);
                     break;
 
             }
@@ -161,8 +161,17 @@ public class Tabla {
         return ret;
     }
 
-    int ir(Sentencia s){
-        return 0;
+    int ir(Sentencia s,int anterior,int[] valores){
+        switch (s.t){
+            case IF:
+            case WHILE:
+                if(s.b.evaluar(valores))return anterior;
+                return s.valores[0];
+            case ENDWHILE:
+                return s.valores[0];
+            default:
+                return anterior;
+        }
     }
 
     public int key(char c){
