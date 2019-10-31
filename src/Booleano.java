@@ -30,8 +30,8 @@ public class Booleano {
     boolean evaluar(int[] valores){
         int x=constantes[0];
         int y=constantes[1];
-        if(pos[0]!=1)x=valores[pos[0]];
-        if(pos[1]!=1)y=valores[pos[1]];
+        if(pos[0]!=-1)x=valores[pos[0]];
+        if(pos[1]!=-1)y=valores[pos[1]];
         switch (this.t){
             case TRUE:
                 return true;

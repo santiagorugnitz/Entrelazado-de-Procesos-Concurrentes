@@ -50,7 +50,7 @@ public class Compilador {
                 case ENDWHILE:
                     if(pila.largo()==0)return false;
                     if(sonCompatibles(pila.getTop(),s)){
-                        pila.getTop().valores[0]=i;
+                        pila.getTop().valores[0]=i+1;
                         s.valores[0]=pila.getPos();
                         pila.sacar();
                     }
@@ -232,7 +232,9 @@ public class Compilador {
                     } else if (op.length() == 1 && esUnaVar(op.charAt(0))) {
                         ret.pos[j] = key(op.charAt(0));
                     }
+                    else return null;
                 }
+                return ret;
 
 
             }
