@@ -1,6 +1,14 @@
-a=0
-b=5
+a=1
+b=99
 c=99
 d=99
-f=true
-g=true
+f=false
+g=false
+//Alias usar null si no se quiere usar aliases
+a=variable
+b=null
+c=c
+d=d
+f=f
+g=g
+

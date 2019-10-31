@@ -10,10 +10,7 @@ public class Main {
         File f2 = new File("p2.txt");
         File main= new File("main.txt");
         System.out.println(f1.getAbsolutePath());
-        Compilador c1 = new Compilador(f1,"Programa 1");
-        Compilador c2 = new Compilador(f2,"Programa 2");
         int[] valoresIniciales = new int[6];
-        ArrayList<String> operacionesConocidas = new ArrayList<String>();
         Scanner in = new Scanner(main);
         int i = 0;
         while(in.hasNext() && i < 4){
@@ -34,12 +31,18 @@ public class Main {
             }
             i++;
         }
-
+        i=0;
+        String[] alias=new String[6];
         while(in.hasNext()){
-            String[] s = in.nextLine().split(" ");
-            operacionesConocidas.add(s[1]);
-        }
+            String s=in.nextLine();
+            if(s.contains("=")){
+            String[] linea= s.split("=");
+            alias[i]=linea[1];
+            i++;
+        }}
 
+        Compilador c1 = new Compilador(f1,"Programa 1",alias);
+        Compilador c2 = new Compilador(f2,"Programa 2",alias);
         if(c1.compilar()&&c2.compilar()){
             Tabla t= new Tabla(c1.getPrograma(),c2.getPrograma(),valoresIniciales);
             t.mostrarReducido();

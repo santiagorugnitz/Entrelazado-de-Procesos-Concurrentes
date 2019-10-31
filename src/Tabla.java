@@ -125,7 +125,8 @@ public class Tabla {
                 case ENDWHILE:
                     pos = ir(s, pos, nuevo.variables);
                     break;
-
+                default:
+                    break;
             }
             if (!estados[i][pos].contains(nuevo)) {
                 estados[i][pos].add(nuevo);
@@ -148,6 +149,8 @@ public class Tabla {
                 case WHILE:
                 case ENDWHILE:
                     pos = ir(s, pos, nuevo.variables);
+                    break;
+                default:
                     break;
 
             }
@@ -234,7 +237,8 @@ public class Tabla {
             if (!ignorarp2[i]) {
                 for (int j = 0; j < estados[0].length; j++) {
                     if (!ignorarp1[j]) {
-                        System.out.println("Celda: " + x + " " + y);
+
+                        if(estados[i][j].size()>0)System.out.println("Celda: " + x + " " + y);
                         for (int k = 0; k < estados[i][j].size(); k++) {
                             estados[i][j].get(k).mostrarReducido();
                         }
@@ -243,6 +247,7 @@ public class Tabla {
                 }
                 x++;
                 y = 0;
+                System.out.println("---------------------------------------------------------------------------------");
             }
         }
     }

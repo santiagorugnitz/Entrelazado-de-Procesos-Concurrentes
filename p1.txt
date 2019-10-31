@@ -1,3 +1,1 @@
-while a==0 do
-endwhile
-a=5
+variable=8

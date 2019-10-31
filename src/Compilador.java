@@ -10,14 +10,17 @@ public class Compilador {
     private String nombre;
     private File archivo;
     private Programa prog;
-    private boolean hayErrores;
+    private String[] alias=new String[6];
 
 
-    public Compilador(File f, String n) {
+
+    public Compilador(File f, String n,String[] ali) {
         this.nombre = n;
         this.archivo = f;
         this.prog = new Programa();
-        this.hayErrores = false;
+        for (int i = 0; i < ali.length; i++) {
+            alias[i]=ali[i];
+        }
     }
 
     public Programa getPrograma() {
@@ -30,7 +33,12 @@ public class Compilador {
         Scanner in = new Scanner(archivo);
         int pos = 1;
         while (in.hasNext()) {
-            Sentencia s =procesarLinea(in.nextLine());
+            String linea =in.nextLine();
+            for (int i = 0; i < alias.length; i++) {
+                char c = (char) ('a'+i);
+                if(!alias[i].equals("null"))linea=linea.replace(alias[i],""+c);
+            }
+            Sentencia s =procesarLinea(linea);
             if (s.t == Sentencia.Tipo.ERROR) {
                 System.out.println("Error en " + nombre + " en linea " + pos);
                 return false;
@@ -149,7 +157,7 @@ public class Compilador {
                 } else ret = new Sentencia(Sentencia.Tipo.ERROR);
 
             }
-        } else if (linea.startsWith("co")) {
+        } else if (linea.startsWith("seccion")) {
             ret = new Sentencia(Sentencia.Tipo.NADA);
         }
         //ERROR
@@ -193,6 +201,7 @@ public class Compilador {
         if (s.length() == 1) {
             if (s.charAt(0) == '1') return new Booleano(Booleano.tipo.TRUE);
             if (s.charAt(0) == '0') return new Booleano(Booleano.tipo.FALSE);
+            if(s.charAt(0)=='f'||s.charAt(0)=='e')s+="==true";
         }
         String[] operadores = {"==", "<=", ">=", "<", ">", "!="};
         for (int i = 0; i < operadores.length; i++) {
