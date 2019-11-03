@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -44,18 +43,20 @@ public class Tabla {
 
         }
 
-        public void mostrarReducido() {
+        @Override
+        public String toString() {
+            String ret="";
             for (int i = 0; i < 4; i++) {
-                if (vUsadas[i]) System.out.print(variables[i]);
+                if (vUsadas[i]) ret+=variables[i];
             }
 
             for (int i = 4; i < 6; i++) {
                 if (vUsadas[i]) {
-                    if (variables[i] == 1) System.out.print("T");
-                    else System.out.print("F");
+                    if (variables[i] == 1) ret+="T";
+                    else ret+="F";
                 }
             }
-            System.out.println();
+            return ret;
         }
     }
 
@@ -229,38 +230,81 @@ public class Tabla {
         else return c - 'a';
     }
 
-    public void mostrar() {
-        for (int i = 0; i < estados.length; i++) {
-            for (int j = 0; j < estados[0].length; j++) {
-                System.out.println("Celda:" + i + " " + j);
-                for (int k = 0; k < estados[i][j].size(); k++) {
-                    estados[i][j].get(k).mostrarReducido();
-                    //System.out.println("---------");
-                }
-            }
-        }
-    }
-
     public void mostrarReducido() {
         int x = 0;
         int y = 0;
+        int filas=contarFalse(ignorarp1);
+        int columnas=contarFalse(ignorarp1);
+        ArrayList<String>[][] mat = new ArrayList[filas][columnas];
+        int max=0;
+        String vacia="";
         for (int i = 0; i < estados.length; i++) {
             if (!ignorarp2[i]) {
                 for (int j = 0; j < estados[0].length; j++) {
                     if (!ignorarp1[j]) {
 
-                        if (estados[i][j].size() > 0) System.out.println("Celda: " + x + " " + y);
+                       // if (estados[i][j].size() > 0) System.out.println("Celda: " + x + " " + y);
                         for (int k = 0; k < estados[i][j].size(); k++) {
-                            estados[i][j].get(k).mostrarReducido();
+                           // System.out.println(estados[i][j].get(k));
+                            if(mat[x][y]==null)mat[x][y]=new ArrayList<>();
+                            mat[x][y].add(estados[i][j].get(k).toString());
+                            if(vacia.length()==0){
+                                for (int l = 0; l < estados[i][j].get(k).toString().length(); l++) {
+                                    vacia+=" ";
+                                }
+                            }
+                            max=Math.max(max,mat[x][y].size());
                         }
                         y++;
                     }
                 }
                 x++;
                 y = 0;
-                System.out.println("---------------------------------------------------------------------------------");
+                //System.out.println("---------------------------------------------------------------------------------");
             }
         }
+
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                if(mat[i][j]==null)mat[i][j]=new ArrayList<>();
+                while(mat[i][j].size()<max)mat[i][j].add(vacia);
+            }
+        }
+
+        String horizontal = "|";
+        for (int j = 0; j < mat[0].length-1; j++) {
+            horizontal+=(vacia.replaceAll(" ","-"));
+            horizontal+=("+");
+        }
+        horizontal+=(vacia.replaceAll(" ","-")+"|");
+        System.out.print("   ");
+        for (int i = 0; i < mat[0].length-1; i++) {
+            System.out.print(vacia+(i+1));
+        }
+        System.out.println();
+        System.out.print("  ");
+        System.out.println(horizontal.replaceAll("\\+","|"));
+
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < max; j++) {
+                System.out.print("  |");
+                for (int k = 0; k < mat[0].length; k++) {
+                    System.out.print(mat[i][k].get(j));
+                    System.out.print("|");
+                }
+                System.out.println();
+            }
+            if(i<mat.length-1)System.out.print(i+1+"'");
+            else System.out.print("  ");
+            System.out.println(horizontal);
+        }
+    }
+    private int contarFalse(boolean[] b){
+        int ret=0;
+        for (int i = 0; i <b.length ; i++) {
+            if(!b[i])ret++;
+        }
+        return ret;
     }
 
 }
