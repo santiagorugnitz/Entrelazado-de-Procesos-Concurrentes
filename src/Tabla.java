@@ -283,7 +283,7 @@ public class Tabla {
         }
         System.out.println();
         System.out.print("  ");
-        System.out.println(horizontal.replaceAll("\\+","|"));
+        System.out.println(horizontal);
 
         for (int i = 0; i < mat.length; i++) {
             for (int j = 0; j < max; j++) {
