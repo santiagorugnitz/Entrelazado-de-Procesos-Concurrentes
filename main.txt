@@ -5,17 +5,12 @@ d=99
 e=false
 f=false
 //Aliases:usar null si no se quiere usar un alias para la variable
-a=a
-b=b
+a=null
+b=null
 c=null
 d=null
-<<<<<<< Updated upstream
 e=null
 f=null
-=======
-e=p1deseaentrar
-f=p2deseaentrar
->>>>>>> Stashed changes
 cobegin
 p1
 p2

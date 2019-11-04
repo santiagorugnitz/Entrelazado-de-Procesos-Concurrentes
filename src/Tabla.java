@@ -233,6 +233,7 @@ public class Tabla {
         ArrayList<String>[][] mat = new ArrayList[filas][columnas];
         int max=0;
         String vacia="";
+        int largoMaxEstado=0;
         for (int i = 0; i < estados.length; i++) {
             if (!ignorarp2[i]) {
                 for (int j = 0; j < estados[0].length; j++) {
@@ -243,11 +244,7 @@ public class Tabla {
                            // System.out.println(estados[i][j].get(k));
                             if(mat[x][y]==null)mat[x][y]=new ArrayList<>();
                             mat[x][y].add(estados[i][j].get(k).toString());
-                            if(vacia.length()==0){
-                                for (int l = 0; l < estados[i][j].get(k).toString().length(); l++) {
-                                    vacia+=" ";
-                                }
-                            }
+                            largoMaxEstado=Math.max(largoMaxEstado,estados[i][j].get(k).toString().length());
                             max=Math.max(max,mat[x][y].size());
                         }
                         y++;
@@ -258,10 +255,18 @@ public class Tabla {
                 //System.out.println("---------------------------------------------------------------------------------");
             }
         }
+        for (int l = 0; l < largoMaxEstado; l++) {
+            vacia+=" ";
+        }
 
         for (int i = 0; i < mat.length; i++) {
             for (int j = 0; j < mat[0].length; j++) {
                 if(mat[i][j]==null)mat[i][j]=new ArrayList<>();
+                for (int k = 0; k < mat[i][j].size(); k++) {
+                    while(mat[i][j].get(k).length()<largoMaxEstado){
+                        mat[i][j].set(k,mat[i][j].get(k)+" ");
+                    }
+                }
                 while(mat[i][j].size()<max)mat[i][j].add(vacia);
             }
         }
