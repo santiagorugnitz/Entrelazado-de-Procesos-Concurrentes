@@ -7,20 +7,6 @@ public class Booleano {
     enum operador {AND,OR,EQUALS,DIFF}
     operador op;
 
-    public Booleano(tipo t, int pos1, int pos2, int const1, int const2) {
-        this.t = t;
-        this.pos[0] = pos1;
-        this.pos[1] = pos2;
-        this.constantes[0] = const1;
-        this.constantes[1] = const2;
-    }
-
-    Booleano(tipo t, int p1, int p2){
-        this.t=t;
-        this.pos[0]=p1;
-        this.pos[1]=p2;
-    }
-
     Booleano(tipo t,int p1){
         this.t=t;
         this.pos[0]=p1;

@@ -1,15 +1,10 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Tabla {
 
 
     class Estado {
         int[] variables;
-
-        Estado() {
-            this.variables = new int[6];
-        }
 
         Estado(int[] a) {
             this.variables = new int[a.length];
