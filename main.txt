@@ -9,8 +9,13 @@ a=a
 b=b
 c=null
 d=null
+<<<<<<< Updated upstream
 e=null
 f=null
+=======
+e=p1deseaentrar
+f=p2deseaentrar
+>>>>>>> Stashed changes
 cobegin
 p1
 p2
