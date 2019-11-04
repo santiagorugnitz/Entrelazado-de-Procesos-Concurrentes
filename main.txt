@@ -1,16 +1,16 @@
-a=1
-b=99
+a=5
+b=4
 c=99
 d=99
+e=false
 f=false
-g=false
 //Aliases:usar null si no se quiere usar un alias para la variable
-a=pfav
-b=null
+a=a
+b=b
 c=null
 d=null
-f=p1deseaentrar
-g=p2deseaentrar
+e=null
+f=null
 cobegin
 p1
 p2

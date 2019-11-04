@@ -30,7 +30,7 @@ public class Compilador {
     public boolean compilar() throws FileNotFoundException {
         ArrayList<String> listaLineas = new ArrayList<String>();
         Scanner in = new Scanner(archivo);
-        int pos = 1;
+        int pos = 0;
         while (in.hasNext()) {
             String linea =in.nextLine();
             for (int i = 0; i < alias.length; i++) {
@@ -38,6 +38,7 @@ public class Compilador {
                 if(!alias[i].equals("null"))linea=linea.replace(alias[i],""+c);
             }
             Sentencia s =procesarLinea(linea);
+            pos++;
             if (s.t == Sentencia.Tipo.ERROR) {
                 System.out.println("Error en " + nombre + " en linea " + pos);
                 return false;
@@ -156,7 +157,7 @@ public class Compilador {
                 } else ret = new Sentencia(Sentencia.Tipo.ERROR);
 
             }
-        } else if (linea.startsWith("seccion")) {
+        } else if (linea.length()>1) {
             ret = new Sentencia(Sentencia.Tipo.NADA);
         }
         //ERROR
