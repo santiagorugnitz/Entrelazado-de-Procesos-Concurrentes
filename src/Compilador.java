@@ -10,8 +10,7 @@ public class Compilador {
     private File archivo;
     private Programa prog;
     private String[] alias=new String[6];
-
-
+    
 
     public Compilador(File f, String n,String[] ali) {
         this.nombre = n;
