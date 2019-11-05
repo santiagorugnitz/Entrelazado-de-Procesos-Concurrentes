@@ -1,2 +1,6 @@
-b=0
-a=a-1
+p2deseaentrar=true
+pfav=1
+while p1deseaentrar==true and pfav==1 do
+endwhile
+seccionCritica2
+p2deseaentrar=false
